@@ -1,0 +1,13 @@
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/node_modules
+frontend/out
+frontend/.next
+db/finally.db
+.env
+.git
+planning
+test
+*.md
