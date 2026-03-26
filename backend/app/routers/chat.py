@@ -11,9 +11,8 @@ from pydantic import BaseModel, Field
 from app.database import get_db
 from app.market import PriceCache
 
-# LiteLLM constants (Cerebras via OpenRouter)
-MODEL = "openrouter/openai/gpt-oss-120b"
-EXTRA_BODY = {"provider": {"order": ["cerebras"]}}
+# LiteLLM constants (direct Cerebras inference)
+MODEL = "cerebras/qwen-3-235b-a22b-instruct-2507"
 
 SYSTEM_PROMPT = """You are FinAlly, an AI trading assistant for a simulated trading platform.
 The user has a virtual portfolio with fake money — no real financial risk.
@@ -240,8 +239,6 @@ async def _get_llm_response(
         model=MODEL,
         messages=messages,
         response_format=ChatResponse,
-        reasoning_effort="low",
-        extra_body=EXTRA_BODY,
     )
     content = response.choices[0].message.content
     return ChatResponse.model_validate_json(content)
