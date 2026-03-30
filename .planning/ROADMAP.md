@@ -12,7 +12,7 @@ Build a Bloomberg-terminal-aesthetic AI trading workstation in seven phases: fir
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Backend Foundation** - FastAPI app wired to SQLite, seeded with default data, market data running
+- [x] **Phase 1: Backend Foundation** - FastAPI app wired to SQLite, seeded with default data, market data running (completed 2026-03-30)
 - [ ] **Phase 2: Portfolio & Watchlist API** - Complete REST API for trading, portfolio snapshots, and watchlist management
 - [ ] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode
 - [ ] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel
@@ -31,10 +31,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. On fresh start, database file is created with schema tables and default user ($10,000 cash)
   3. Default watchlist of 10 tickers (AAPL, GOOGL, MSFT, AMZN, TSLA, NVDA, META, JPM, V, NFLX) exists in the database
   4. Price streaming via `GET /api/stream/prices` delivers live SSE events from the market data subsystem
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 01-01-PLAN.md — SQLite database module with schema, seed data, and connection helpers
-- [ ] 01-02-PLAN.md — FastAPI entry point with lifespan, health endpoint, and SSE wiring
+- [x] 01-02-PLAN.md — FastAPI entry point with lifespan, health endpoint, and SSE wiring
 
 ### Phase 2: Portfolio & Watchlist API
 **Goal**: Users can trade a simulated portfolio and manage their watchlist entirely through REST endpoints
@@ -121,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend Foundation | 1/2 | In Progress|  |
+| 1. Backend Foundation | 2/2 | Complete   | 2026-03-30 |
 | 2. Portfolio & Watchlist API | 0/TBD | Not started | - |
 | 3. Chat API | 0/TBD | Not started | - |
 | 4. Frontend Shell & Watchlist | 0/TBD | Not started | - |

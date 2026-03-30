@@ -7,12 +7,12 @@
 
 ### Backend Foundation
 
-- [ ] **BACK-01**: Backend FastAPI app starts and serves all API routes on port 8000
+- [x] **BACK-01**: Backend FastAPI app starts and serves all API routes on port 8000
 - [x] **BACK-02**: SQLite database lazily initializes (creates schema + seeds data on first start)
 - [x] **BACK-03**: Default user profile created with $10,000 cash balance
 - [x] **BACK-04**: Default watchlist seeded with 10 tickers (AAPL, GOOGL, MSFT, AMZN, TSLA, NVDA, META, JPM, V, NFLX)
-- [ ] **BACK-05**: Health check endpoint returns 200 OK
-- [ ] **BACK-06**: Market data subsystem (simulator/Massive) integrated at app startup and shutdown
+- [x] **BACK-05**: Health check endpoint returns 200 OK
+- [x] **BACK-06**: Market data subsystem (simulator/Massive) integrated at app startup and shutdown
 
 ### Portfolio API
 
