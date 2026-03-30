@@ -31,7 +31,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. On fresh start, database file is created with schema tables and default user ($10,000 cash)
   3. Default watchlist of 10 tickers (AAPL, GOOGL, MSFT, AMZN, TSLA, NVDA, META, JPM, V, NFLX) exists in the database
   4. Price streaming via `GET /api/stream/prices` delivers live SSE events from the market data subsystem
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — SQLite database module with schema, seed data, and connection helpers
+- [ ] 01-02-PLAN.md — FastAPI entry point with lifespan, health endpoint, and SSE wiring
 
 ### Phase 2: Portfolio & Watchlist API
 **Goal**: Users can trade a simulated portfolio and manage their watchlist entirely through REST endpoints
@@ -118,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend Foundation | 0/TBD | Not started | - |
+| 1. Backend Foundation | 0/2 | Planning complete | - |
 | 2. Portfolio & Watchlist API | 0/TBD | Not started | - |
 | 3. Chat API | 0/TBD | Not started | - |
 | 4. Frontend Shell & Watchlist | 0/TBD | Not started | - |
