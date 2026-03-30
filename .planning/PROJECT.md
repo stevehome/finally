@@ -13,10 +13,12 @@ A Bloomberg-terminal-aesthetic trading workstation where users watch live prices
 ### Validated
 
 - ✓ Market data subsystem (GBM simulator + Massive/Polygon.io client, PriceCache, SSE stream endpoint) — Phase 0 / pre-GSD
+- ✓ FastAPI backend with SQLite database (schema, seed data, lazy init) — Validated in Phase 1: backend-foundation
+- ✓ FastAPI app entry point with lifespan, health endpoint, SSE stream router — Validated in Phase 1: backend-foundation
 
 ### Active
 
-- [ ] FastAPI backend with SQLite database (schema, seed data, lazy init)
+- [ ] REST API endpoints (portfolio, watchlist, trades, chat, health)
 - [ ] REST API endpoints (portfolio, watchlist, trades, chat, health)
 - [ ] Frontend: dark-theme trading terminal UI (Next.js static export)
 - [ ] Watchlist panel with live price updates and sparklines
@@ -42,7 +44,7 @@ A Bloomberg-terminal-aesthetic trading workstation where users watch live prices
 
 ## Context
 
-- **Already built**: `backend/app/market/` — complete market data subsystem (8 modules, ~500 lines, 73 tests passing, 84% coverage). GBM simulator + Massive REST client, PriceCache, SSE endpoint at `/api/stream/prices`. Ready for downstream use.
+- **Already built**: `backend/app/market/` — complete market data subsystem (8 modules, ~500 lines, 73 tests passing, 84% coverage). GBM simulator + Massive REST client, PriceCache, SSE endpoint at `/api/stream/prices`. `backend/app/db.py` — SQLite schema (6 tables), seed data, connection helpers. `backend/main.py` — FastAPI app with lifespan, health router, SSE router, static file stub. 84 tests passing.
 - **Tech stack**: FastAPI + uv (Python), Next.js static export (TypeScript), SQLite, SSE, LiteLLM → OpenRouter (`openrouter/openai/gpt-oss-120b` via Cerebras), Docker single container port 8000.
 - **LLM**: Structured outputs, returns `{message, trades[], watchlist_changes[]}`. Auto-executes trades — no confirmation dialog. Mock mode via `LLM_MOCK=true`.
 - **Course context**: Built by AI coding agents demonstrating orchestrated agentic development. Code clarity and demo-ability matter.
@@ -68,4 +70,4 @@ A Bloomberg-terminal-aesthetic trading workstation where users watch live prices
 | No confirmation on AI trades | Simulated money, fluid demo experience, shows agentic capability | — Pending |
 
 ---
-*Last updated: 2026-03-30 after project initialization*
+*Last updated: 2026-03-30 after Phase 1: backend-foundation complete*
