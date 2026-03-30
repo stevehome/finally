@@ -47,7 +47,11 @@ Plans:
   4. A trade with insufficient cash (buy) or insufficient shares (sell) returns an error response, not a 500
   5. Portfolio snapshots are recorded after each trade and every 30 seconds; `GET /api/portfolio/history` returns them
   6. `GET /api/watchlist` returns tickers with current prices; adding and removing tickers updates price streaming
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 02-01-PLAN.md — Test stubs (Wave 1): failing tests for all PORT and WATCH requirements
+- [ ] 02-02-PLAN.md — Portfolio router (Wave 2): GET /api/portfolio, POST /api/portfolio/trade, GET /api/portfolio/history, snapshot background task, main.py wiring
+- [ ] 02-03-PLAN.md — Watchlist router (Wave 3): GET /api/watchlist, POST /api/watchlist, DELETE /api/watchlist/{ticker}
 
 ### Phase 3: Chat API
 **Goal**: Users can converse with an AI assistant that has portfolio context and can auto-execute trades and watchlist changes
@@ -122,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Backend Foundation | 2/2 | Complete   | 2026-03-30 |
-| 2. Portfolio & Watchlist API | 0/TBD | Not started | - |
+| 2. Portfolio & Watchlist API | 0/3 | Not started | - |
 | 3. Chat API | 0/TBD | Not started | - |
 | 4. Frontend Shell & Watchlist | 0/TBD | Not started | - |
 | 5. Charts, Portfolio & Trade UI | 0/TBD | Not started | - |
