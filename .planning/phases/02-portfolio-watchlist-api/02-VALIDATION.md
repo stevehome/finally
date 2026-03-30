@@ -2,8 +2,8 @@
 phase: 2
 slug: portfolio-watchlist-api
 status: draft
-nyquist_compliant: false
-wave_0_complete: false
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-30
 ---
 
@@ -83,4 +83,4 @@ created: 2026-03-30
 - [ ] Feedback latency < 15s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** 2026-03-30 — plan-checker PASS (all 13 requirements covered, wave ordering correct, Nyquist compliant)
