@@ -1,8 +1,8 @@
 """Integration tests for FastAPI app startup, health endpoint, and SSE stream."""
 
 import os
+import sqlite3
 
-import pytest
 from fastapi.testclient import TestClient
 
 from main import app
@@ -36,8 +36,6 @@ def test_lifespan_initializes_db(tmp_db):
         # DB should be initialized during lifespan startup
         assert os.path.exists(tmp_db)
 
-        import sqlite3
-
         conn = sqlite3.connect(tmp_db)
         cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
         tables = {row[0] for row in cursor.fetchall()}
@@ -59,24 +57,15 @@ def test_sse_stream_returns_event_stream(tmp_db):
 
     Direct HTTP testing of infinite SSE generators is incompatible with in-process
     ASGI transports (httpx, TestClient) — they deadlock on the disconnect listener.
-    We verify the route exists and the media_type is set correctly by inspecting
-    the router configuration.
+    We verify the route is registered and the endpoint is wired correctly.
     """
-    with TestClient(app) as client:
-        # Verify /api/stream/prices is a known route
+    with TestClient(app):
         routes = {route.path for route in app.routes}
         assert "/api/stream/prices" in routes
-
-    # Verify the SSE route handler returns a StreamingResponse with text/event-stream.
-    # We check the router's media_type by finding the route and inspecting its response class.
-    from fastapi.routing import APIRoute
-    from starlette.responses import StreamingResponse
 
     sse_route = next(
         (r for r in app.routes if hasattr(r, "path") and r.path == "/api/stream/prices"),
         None,
     )
     assert sse_route is not None, "/api/stream/prices route not registered"
-    # The StreamingResponse media_type is verified by the stream router implementation tests.
-    # Here we just confirm the route endpoint is present and the app registered it correctly.
     assert hasattr(sse_route, "endpoint")
