@@ -1,0 +1,7 @@
+{
+  "mode": "interactive",
+  "granularity": "standard",
+  "execution": "sequential",
+  "commit_docs": true,
+  "profile": "balanced"
+}
