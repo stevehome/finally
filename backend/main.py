@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.db import get_watchlist_tickers, init_db
 from app.market import PriceCache, create_market_data_source, create_stream_router
-from app.routers import health, portfolio
+from app.routers import health, portfolio, watchlist
 from app.routers.portfolio import record_snapshot
 
 logging.basicConfig(level=logging.INFO)
@@ -58,6 +58,7 @@ app = FastAPI(title="FinAlly API", lifespan=lifespan)
 app.include_router(health.router, prefix="/api")
 app.include_router(stream_router)
 app.include_router(portfolio.router, prefix="/api")
+app.include_router(watchlist.router, prefix="/api")
 
 # Static files — mount last; conditional on directory existing
 _STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
