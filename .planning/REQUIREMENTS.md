@@ -48,11 +48,11 @@
 - [x] **FE-01**: Next.js app builds as static export and is served by FastAPI at root
 - [x] **FE-02**: Dark terminal aesthetic with correct color scheme (bg ~#0d1117, accent #ecad0a, blue #209dd7, purple #753991)
 - [ ] **FE-03**: Header shows live portfolio total value, cash balance, and connection status indicator
-- [ ] **FE-04**: SSE connection established on page load via EventSource; reconnects automatically
+- [x] **FE-04**: SSE connection established on page load via EventSource; reconnects automatically
 
 ### Watchlist UI
 
-- [ ] **WUI-01**: Watchlist panel shows all watched tickers in a grid/table
+- [x] **WUI-01**: Watchlist panel shows all watched tickers in a grid/table
 - [ ] **WUI-02**: Each ticker row shows symbol, current price, daily change %, and a sparkline
 - [ ] **WUI-03**: Price updates flash green (uptick) or red (downtick) with ~500ms CSS fade
 - [ ] **WUI-04**: Sparklines accumulate price history from SSE stream since page load
