@@ -43,17 +43,8 @@ async def get_watchlist(request: Request) -> dict:
     return {"watchlist": watchlist}
 
 
-@router.post("/watchlist", status_code=201)
-async def add_ticker(request: Request, body: WatchlistAddRequest) -> dict:
-    """Add a ticker to the watchlist (idempotent) and start streaming its price.
-
-    Uses INSERT OR IGNORE so adding a duplicate ticker never errors.
-    Always calls source.add_ticker so the market data source stays in sync.
-    """
-    user_id = "default"
-    ticker = body.ticker.upper()
-    source = request.app.state.source
-
+async def add_ticker_internal(source: object, ticker: str, user_id: str = "default") -> bool:
+    """Add ticker to DB and market data source. Idempotent (INSERT OR IGNORE). Returns True."""
     conn = get_connection()
     try:
         conn.execute(
@@ -66,19 +57,11 @@ async def add_ticker(request: Request, body: WatchlistAddRequest) -> dict:
 
     await source.add_ticker(ticker)
     logger.info("Added %s to watchlist", ticker)
-    return {"ticker": ticker}
+    return True
 
 
-@router.delete("/watchlist/{ticker}")
-async def remove_ticker(request: Request, ticker: str) -> dict:
-    """Remove a ticker from the watchlist and stop streaming its price.
-
-    Returns 404 if the ticker is not in the watchlist.
-    """
-    user_id = "default"
-    ticker = ticker.upper()
-    source = request.app.state.source
-
+async def remove_ticker_internal(source: object, ticker: str, user_id: str = "default") -> bool:
+    """Remove ticker from DB and market data source. Returns False if not found."""
     conn = get_connection()
     try:
         row = conn.execute(
@@ -86,7 +69,7 @@ async def remove_ticker(request: Request, ticker: str) -> dict:
             (user_id, ticker),
         ).fetchone()
         if row is None:
-            raise HTTPException(status_code=404, detail=f"Ticker {ticker} not in watchlist")
+            return False
 
         conn.execute(
             "DELETE FROM watchlist WHERE user_id = ? AND ticker = ?",
@@ -98,4 +81,31 @@ async def remove_ticker(request: Request, ticker: str) -> dict:
 
     await source.remove_ticker(ticker)
     logger.info("Removed %s from watchlist", ticker)
+    return True
+
+
+@router.post("/watchlist", status_code=201)
+async def add_ticker(request: Request, body: WatchlistAddRequest) -> dict:
+    """Add a ticker to the watchlist (idempotent) and start streaming its price.
+
+    Uses INSERT OR IGNORE so adding a duplicate ticker never errors.
+    Always calls source.add_ticker so the market data source stays in sync.
+    """
+    ticker = body.ticker.upper()
+    source = request.app.state.source
+    await add_ticker_internal(source, ticker)
+    return {"ticker": ticker}
+
+
+@router.delete("/watchlist/{ticker}")
+async def remove_ticker(request: Request, ticker: str) -> dict:
+    """Remove a ticker from the watchlist and stop streaming its price.
+
+    Returns 404 if the ticker is not in the watchlist.
+    """
+    ticker = ticker.upper()
+    source = request.app.state.source
+    found = await remove_ticker_internal(source, ticker)
+    if not found:
+        raise HTTPException(status_code=404, detail=f"Ticker {ticker} not in watchlist")
     return {"ticker": ticker}

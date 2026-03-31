@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from main import app
 
 try:
-    from app.llm import ChatResponse, TradeAction, WatchlistAction, call_llm
+    from app.llm import ChatResponse, TradeAction, WatchlistAction
 except ImportError:
     pass  # xfail will handle this
 

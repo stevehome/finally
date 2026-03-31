@@ -108,20 +108,19 @@ async def get_portfolio(request: Request) -> dict:
     return {"cash_balance": cash, "positions": positions, "total_value": total_value}
 
 
-@router.post("/portfolio/trade")
-async def execute_trade(request: Request, trade: TradeRequest) -> dict:
-    """Execute a market order — buy or sell at the current cached price.
+def execute_trade_internal(
+    price_cache: PriceCache,
+    ticker: str,
+    quantity: float,
+    side: str,
+    user_id: str = "default",
+) -> dict:
+    """Execute a trade, returning a result dict with error=None on success.
 
-    Validates sufficient cash (buy) or sufficient shares (sell) before any mutation.
-    All DB changes run in a single atomic transaction.
-    After success, records a portfolio snapshot.
+    Does NOT raise HTTPException — caller decides how to handle errors.
+    Returns: {"ticker", "side", "quantity", "price", "error"}
+    Still calls record_snapshot after a successful trade.
     """
-    price_cache: PriceCache = request.app.state.price_cache
-    user_id = "default"
-    ticker = trade.ticker.upper()
-    quantity = trade.quantity
-    side = trade.side.lower()
-
     current_price = price_cache.get_price(ticker)
 
     conn = get_connection()
@@ -133,7 +132,8 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
         ).fetchone()
         if profile is None:
             conn.rollback()
-            raise HTTPException(status_code=500, detail="User profile not found")
+            return {"ticker": ticker, "side": side, "quantity": quantity, "price": 0.0,
+                    "error": "User profile not found"}
         cash = profile["cash_balance"]
 
         position = conn.execute(
@@ -149,7 +149,8 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
             cost = quantity * current_price
             if cash < cost:
                 conn.rollback()
-                raise HTTPException(status_code=400, detail="Insufficient cash")
+                return {"ticker": ticker, "side": side, "quantity": quantity,
+                        "price": current_price, "error": "Insufficient cash"}
 
             new_cash = cash - cost
             conn.execute(
@@ -185,7 +186,8 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
             owned = position["quantity"] if position else 0.0
             if owned < quantity:
                 conn.rollback()
-                raise HTTPException(status_code=400, detail="Insufficient shares")
+                return {"ticker": ticker, "side": side, "quantity": quantity,
+                        "price": current_price, "error": "Insufficient shares"}
 
             proceeds = quantity * current_price
             new_cash = cash + proceeds
@@ -208,7 +210,8 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
                 )
         else:
             conn.rollback()
-            raise HTTPException(status_code=400, detail="Invalid side — must be 'buy' or 'sell'")
+            return {"ticker": ticker, "side": side, "quantity": quantity,
+                    "price": current_price, "error": "Invalid side — must be 'buy' or 'sell'"}
 
         # Record the trade
         conn.execute(
@@ -225,12 +228,11 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
             ),
         )
         conn.commit()
-    except HTTPException:
-        raise
     except sqlite3.Error:
         conn.rollback()
         logger.exception("DB error during trade execution for %s", ticker)
-        raise HTTPException(status_code=500, detail="Database error")
+        return {"ticker": ticker, "side": side, "quantity": quantity,
+                "price": current_price or 0.0, "error": "Database error"}
     finally:
         conn.close()
 
@@ -240,13 +242,26 @@ async def execute_trade(request: Request, trade: TradeRequest) -> dict:
     except Exception:
         logger.exception("Failed to record snapshot after trade")
 
-    return {
-        "status": "ok",
-        "ticker": ticker,
-        "side": side,
-        "quantity": quantity,
-        "price": current_price,
-    }
+    return {"ticker": ticker, "side": side, "quantity": quantity, "price": current_price,
+            "error": None}
+
+
+@router.post("/portfolio/trade")
+async def execute_trade(request: Request, trade: TradeRequest) -> dict:
+    """Execute a market order — buy or sell at the current cached price.
+
+    Validates sufficient cash (buy) or sufficient shares (sell) before any mutation.
+    All DB changes run in a single atomic transaction.
+    After success, records a portfolio snapshot.
+    """
+    price_cache: PriceCache = request.app.state.price_cache
+    result = execute_trade_internal(
+        price_cache, trade.ticker.upper(), trade.quantity, trade.side.lower()
+    )
+    if result["error"]:
+        status = 500 if result["error"] in ("Database error", "User profile not found") else 400
+        raise HTTPException(status_code=status, detail=result["error"])
+    return {"status": "ok", **{k: v for k, v in result.items() if k != "error"}}
 
 
 @router.get("/portfolio/history")
