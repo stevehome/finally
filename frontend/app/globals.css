@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0d1117;
+  --color-bg-secondary: #1a1a2e;
+  --color-accent: #ecad0a;
+  --color-blue-primary: #209dd7;
+  --color-purple-secondary: #753991;
+  --color-green-uptick: #22c55e;
+  --color-red-downtick: #ef4444;
+  --color-border: #30363d;
+  --color-text-primary: #e6edf3;
+  --color-text-muted: #8b949e;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #0d1117;
+  color: #e6edf3;
+}
+
+.flash-up {
+  animation: flash-green 500ms ease-out;
+}
+
+.flash-down {
+  animation: flash-red 500ms ease-out;
+}
+
+@keyframes flash-green {
+  0% { background-color: rgba(34, 197, 94, 0.4); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-red {
+  0% { background-color: rgba(239, 68, 68, 0.4); }
+  100% { background-color: transparent; }
+}
