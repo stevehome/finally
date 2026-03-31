@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { usePriceStream } from '@/hooks/usePriceStream'
 import { usePortfolio } from '@/hooks/usePortfolio'
 import { useWatchlist } from '@/hooks/useWatchlist'
+import Header from './Header'
 import WatchlistPanel from './WatchlistPanel'
 
 export default function AppShell() {
@@ -17,38 +18,7 @@ export default function AppShell() {
       gridTemplateRows: 'auto 1fr',
       gridTemplateColumns: '300px 1fr',
     }}>
-      {/* Header */}
-      <div
-        className="col-span-2 flex items-center justify-between px-4 py-2 border-b"
-        style={{ borderColor: '#30363d', backgroundColor: '#161b22' }}
-      >
-        <span className="text-accent font-bold tracking-widest text-sm">FINALLY</span>
-        <div className="flex items-center gap-6 text-sm">
-          <span className="text-text-muted">
-            Total:{' '}
-            <span className="text-text-primary font-mono">
-              {portfolio
-                ? `$${portfolio.total_value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                : '—'}
-            </span>
-          </span>
-          <span className="text-text-muted">
-            Cash:{' '}
-            <span className="text-text-primary font-mono">
-              {portfolio
-                ? `$${portfolio.cash_balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                : '—'}
-            </span>
-          </span>
-          <span className="flex items-center gap-1.5 text-text-muted">
-            <span
-              className="inline-block w-2 h-2 rounded-full"
-              style={{ backgroundColor: connected ? '#22c55e' : '#ef4444' }}
-            />
-            {connected ? 'Live' : 'Disconnected'}
-          </span>
-        </div>
-      </div>
+      <Header portfolio={portfolio} connected={connected} />
 
       {/* Watchlist column */}
       <div
@@ -70,7 +40,7 @@ export default function AppShell() {
         />
       </div>
 
-      {/* Main area */}
+      {/* Main area — placeholder for Phase 5 */}
       <div
         className="flex items-center justify-center"
         style={{ backgroundColor: '#0d1117' }}
