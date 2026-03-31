@@ -16,22 +16,22 @@
 
 ### Portfolio API
 
-- [ ] **PORT-01**: User can retrieve current portfolio (cash, positions, total value, unrealized P&L)
-- [ ] **PORT-02**: User can execute a buy trade (ticker, quantity) — cash decreases, position created/updated
-- [ ] **PORT-03**: User can execute a sell trade (ticker, quantity) — cash increases, position reduced/removed
-- [ ] **PORT-04**: Trade rejected if insufficient cash (buy) or insufficient shares (sell)
-- [ ] **PORT-05**: Trade execution records entry in trades history table
-- [ ] **PORT-06**: Portfolio snapshot recorded immediately after each trade
-- [ ] **PORT-07**: Background task records portfolio snapshots every 30 seconds
-- [ ] **PORT-08**: User can retrieve portfolio value history (for P&L chart)
+- [x] **PORT-01**: User can retrieve current portfolio (cash, positions, total value, unrealized P&L)
+- [x] **PORT-02**: User can execute a buy trade (ticker, quantity) — cash decreases, position created/updated
+- [x] **PORT-03**: User can execute a sell trade (ticker, quantity) — cash increases, position reduced/removed
+- [x] **PORT-04**: Trade rejected if insufficient cash (buy) or insufficient shares (sell)
+- [x] **PORT-05**: Trade execution records entry in trades history table
+- [x] **PORT-06**: Portfolio snapshot recorded immediately after each trade
+- [x] **PORT-07**: Background task records portfolio snapshots every 30 seconds
+- [x] **PORT-08**: User can retrieve portfolio value history (for P&L chart)
 
 ### Watchlist API
 
-- [ ] **WATCH-01**: User can retrieve watchlist with current prices for each ticker
-- [ ] **WATCH-02**: User can add a ticker to the watchlist
-- [ ] **WATCH-03**: User can remove a ticker from the watchlist
-- [ ] **WATCH-04**: Adding a ticker starts price streaming for that ticker
-- [ ] **WATCH-05**: Removing a ticker stops price streaming for that ticker
+- [x] **WATCH-01**: User can retrieve watchlist with current prices for each ticker
+- [x] **WATCH-02**: User can add a ticker to the watchlist
+- [x] **WATCH-03**: User can remove a ticker from the watchlist
+- [x] **WATCH-04**: Adding a ticker starts price streaming for that ticker
+- [x] **WATCH-05**: Removing a ticker stops price streaming for that ticker
 
 ### Chat API
 
