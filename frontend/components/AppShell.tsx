@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { usePriceStream } from '@/hooks/usePriceStream'
 import { usePortfolio } from '@/hooks/usePortfolio'
 import { useWatchlist } from '@/hooks/useWatchlist'
+import WatchlistPanel from './WatchlistPanel'
 
 export default function AppShell() {
   const { prices, connected, sparkHistory } = usePriceStream()
@@ -11,15 +12,12 @@ export default function AppShell() {
   const tickers = useWatchlist()
   const [selectedTicker, setSelectedTicker] = useState<string | null>(null)
 
-  // sparkHistory passed as prop for WatchlistRow in plan 04-03
-  void sparkHistory
-
   return (
     <div className="grid h-screen" style={{
       gridTemplateRows: 'auto 1fr',
       gridTemplateColumns: '300px 1fr',
     }}>
-      {/* Header — spans both columns */}
+      {/* Header */}
       <div
         className="col-span-2 flex items-center justify-between px-4 py-2 border-b"
         style={{ borderColor: '#30363d', backgroundColor: '#161b22' }}
@@ -29,16 +27,19 @@ export default function AppShell() {
           <span className="text-text-muted">
             Total:{' '}
             <span className="text-text-primary font-mono">
-              {portfolio ? `$${portfolio.total_value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—'}
+              {portfolio
+                ? `$${portfolio.total_value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                : '—'}
             </span>
           </span>
           <span className="text-text-muted">
             Cash:{' '}
             <span className="text-text-primary font-mono">
-              {portfolio ? `$${portfolio.cash_balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—'}
+              {portfolio
+                ? `$${portfolio.cash_balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                : '—'}
             </span>
           </span>
-          {/* Connection status dot */}
           <span className="flex items-center gap-1.5 text-text-muted">
             <span
               className="inline-block w-2 h-2 rounded-full"
@@ -54,35 +55,22 @@ export default function AppShell() {
         className="overflow-y-auto border-r"
         style={{ borderColor: '#30363d', backgroundColor: '#0d1117' }}
       >
-        <div className="p-2 text-xs text-text-muted uppercase tracking-wider border-b px-3 py-2"
-          style={{ borderColor: '#30363d' }}>
+        <div
+          className="text-xs text-text-muted uppercase tracking-wider px-3 py-2 border-b"
+          style={{ borderColor: '#30363d' }}
+        >
           Watchlist
         </div>
-        {tickers.length === 0 ? (
-          <div className="p-3 text-text-muted text-xs">Loading...</div>
-        ) : (
-          tickers.map(ticker => (
-            <div
-              key={ticker}
-              onClick={() => setSelectedTicker(ticker)}
-              className="px-3 py-2 cursor-pointer text-sm border-b"
-              style={{
-                borderColor: '#30363d',
-                backgroundColor: selectedTicker === ticker ? '#1a1a2e' : 'transparent',
-              }}
-            >
-              <span className="text-text-primary font-mono font-semibold">{ticker}</span>
-              {prices[ticker] && (
-                <span className="ml-2 text-text-muted font-mono text-xs">
-                  ${prices[ticker].price.toFixed(2)}
-                </span>
-              )}
-            </div>
-          ))
-        )}
+        <WatchlistPanel
+          tickers={tickers}
+          prices={prices}
+          sparkHistory={sparkHistory}
+          selectedTicker={selectedTicker}
+          onSelectTicker={setSelectedTicker}
+        />
       </div>
 
-      {/* Main area — placeholder for Phase 5 chart */}
+      {/* Main area */}
       <div
         className="flex items-center justify-center"
         style={{ backgroundColor: '#0d1117' }}
