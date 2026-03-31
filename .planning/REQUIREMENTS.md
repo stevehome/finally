@@ -53,10 +53,10 @@
 ### Watchlist UI
 
 - [x] **WUI-01**: Watchlist panel shows all watched tickers in a grid/table
-- [ ] **WUI-02**: Each ticker row shows symbol, current price, daily change %, and a sparkline
-- [ ] **WUI-03**: Price updates flash green (uptick) or red (downtick) with ~500ms CSS fade
-- [ ] **WUI-04**: Sparklines accumulate price history from SSE stream since page load
-- [ ] **WUI-05**: Clicking a ticker selects it and loads it in the main chart area
+- [x] **WUI-02**: Each ticker row shows symbol, current price, daily change %, and a sparkline
+- [x] **WUI-03**: Price updates flash green (uptick) or red (downtick) with ~500ms CSS fade
+- [x] **WUI-04**: Sparklines accumulate price history from SSE stream since page load
+- [x] **WUI-05**: Clicking a ticker selects it and loads it in the main chart area
 
 ### Chart & Portfolio UI
 

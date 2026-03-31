@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-03-31T14:50:53.630Z"
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-03-31T15:15:21.543Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 12
-  completed_plans: 10
+  completed_plans: 11
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 ## Current Position
 
 Phase: 04 (frontend-shell-watchlist) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-03-31
 
@@ -62,6 +62,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-chat-api P03 | 525602 | 2 tasks | 3 files |
 | Phase 04-frontend-shell-watchlist P01 | 8 | 2 tasks | 9 files |
 | Phase 04-frontend-shell-watchlist P02 | 2 | 2 tasks | 6 files |
+| Phase 04 P03 | 15 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,9 @@ Recent decisions affecting current work:
 - [Phase 04-frontend-shell-watchlist]: distDir: ../backend/static routes Next.js build directly to FastAPI static mount
 - [Phase 04-frontend-shell-watchlist]: sparkHistory kept as useRef not useState — avoids re-render on every 500ms price tick
 - [Phase 04-frontend-shell-watchlist]: AppShell owns selectedTicker state — single source of truth for watchlist/chart coordination
+- [Phase 04]: Cast SparkPoint.time as UTCTimestamp for lightweight-charts v5 nominal type compatibility
+- [Phase 04]: WatchlistPanel reads sparkHistory ref directly to avoid re-renders; sparkline updates piggyback on price state changes
+- [Phase 04]: Flash timer cleanup in useEffect prevents stale animation class stacking on rapid consecutive price ticks
 
 ### Pending Todos
 
@@ -104,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T14:50:53.627Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-03-31T15:15:21.540Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None

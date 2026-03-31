@@ -80,7 +80,7 @@ Plans:
   3. The watchlist panel shows all 10 default tickers with symbol, current price, daily change %, and a sparkline that grows over time
   4. Price changes flash green (uptick) or red (downtick) with a ~500ms CSS fade animation
   5. Clicking a ticker in the watchlist selects it (highlighted state visible)
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 - [x] 04-01-PLAN.md — Next.js scaffold + Tailwind v4 dark theme + static export → FastAPI serves blank dark terminal
 - [ ] 04-02-PLAN.md — SSE hook + portfolio polling + watchlist fetch + AppShell grid layout
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Backend Foundation | 2/2 | Complete   | 2026-03-30 |
 | 2. Portfolio & Watchlist API | 3/3 | Complete   | 2026-03-31 |
 | 3. Chat API | 3/3 | Complete   | 2026-03-31 |
-| 4. Frontend Shell & Watchlist | 2/4 | In Progress|  |
+| 4. Frontend Shell & Watchlist | 3/4 | In Progress|  |
 | 5. Charts, Portfolio & Trade UI | 0/TBD | Not started | - |
 | 6. Docker & Deployment | 0/TBD | Not started | - |
 | 7. Testing | 0/TBD | Not started | - |
