@@ -118,9 +118,7 @@ def test_snapshot_after_trade() -> None:
         )
 
     conn = sqlite3.connect(db_path)
-    rows = conn.execute(
-        "SELECT * FROM portfolio_snapshots WHERE user_id = 'default'"
-    ).fetchall()
+    rows = conn.execute("SELECT * FROM portfolio_snapshots WHERE user_id = 'default'").fetchall()
     conn.close()
     assert len(rows) >= 1
 

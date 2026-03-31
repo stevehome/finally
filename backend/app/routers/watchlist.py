@@ -38,8 +38,7 @@ async def get_watchlist(request: Request) -> dict:
         conn.close()
 
     watchlist = [
-        {"ticker": row["ticker"], "price": price_cache.get_price(row["ticker"])}
-        for row in rows
+        {"ticker": row["ticker"], "price": price_cache.get_price(row["ticker"])} for row in rows
     ]
     return {"watchlist": watchlist}
 

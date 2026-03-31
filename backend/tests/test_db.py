@@ -22,7 +22,14 @@ def test_init_creates_all_tables(tmp_db):
     tables = {row[0] for row in cursor.fetchall()}
     conn.close()
 
-    expected = {"users_profile", "watchlist", "positions", "trades", "portfolio_snapshots", "chat_messages"}
+    expected = {
+        "users_profile",
+        "watchlist",
+        "positions",
+        "trades",
+        "portfolio_snapshots",
+        "chat_messages",
+    }
     assert expected == tables
 
 
