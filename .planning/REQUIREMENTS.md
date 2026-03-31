@@ -45,8 +45,8 @@
 
 ### Frontend Shell
 
-- [ ] **FE-01**: Next.js app builds as static export and is served by FastAPI at root
-- [ ] **FE-02**: Dark terminal aesthetic with correct color scheme (bg ~#0d1117, accent #ecad0a, blue #209dd7, purple #753991)
+- [x] **FE-01**: Next.js app builds as static export and is served by FastAPI at root
+- [x] **FE-02**: Dark terminal aesthetic with correct color scheme (bg ~#0d1117, accent #ecad0a, blue #209dd7, purple #753991)
 - [ ] **FE-03**: Header shows live portfolio total value, cash balance, and connection status indicator
 - [ ] **FE-04**: SSE connection established on page load via EventSource; reconnects automatically
 

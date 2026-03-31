@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 03-chat-api/03-03-PLAN.md
-last_updated: "2026-03-31T11:15:20.480Z"
+status: executing
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-31T14:46:28.176Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 7
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 12
+  completed_plans: 9
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-30)
 
 **Core value:** A Bloomberg-terminal trading workstation where users watch live prices stream, trade a simulated portfolio, and have an AI execute trades on their behalf — one browser tab, zero setup.
-**Current focus:** Phase 03 — chat-api
+**Current focus:** Phase 04 — frontend-shell-watchlist
 
 ## Current Position
 
-Phase: 4
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 04 (frontend-shell-watchlist) — EXECUTING
+Plan: 2 of 4
+Status: Ready to execute
 Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-chat-api P01 | 3 | 1 tasks | 1 files |
 | Phase 03-chat-api P02 | 5 | 2 tasks | 5 files |
 | Phase 03-chat-api P03 | 525602 | 2 tasks | 3 files |
+| Phase 04-frontend-shell-watchlist P01 | 8 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 03-chat-api]: Internal helper pattern: router logic split into HTTP handler and non-HTTP helper returning error dict
 - [Phase 03-chat-api]: Import app.llm as llm_module in chat.py to allow monkeypatching of call_llm in tests
 - [Phase 03-chat-api]: User message saved after loading history so it appends to messages list rather than appearing in history
+- [Phase 04-frontend-shell-watchlist]: Tailwind v4 uses CSS-only @theme config — no tailwind.config.js needed
+- [Phase 04-frontend-shell-watchlist]: distDir: ../backend/static routes Next.js build directly to FastAPI static mount
 
 ### Pending Todos
 
@@ -98,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T11:10:08.898Z
-Stopped at: Completed 03-chat-api/03-03-PLAN.md
+Last session: 2026-03-31T14:46:28.171Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
