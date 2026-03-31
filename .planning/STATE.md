@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 02-portfolio-watchlist-api/02-02-PLAN.md
-last_updated: "2026-03-31T07:08:31.416Z"
+status: verifying
+stopped_at: Completed 02-portfolio-watchlist-api/02-03-PLAN.md
+last_updated: "2026-03-31T07:12:19.878Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 7
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 
 Phase: 02 (portfolio-watchlist-api) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-backend-foundation P02 | 23 | 2 tasks | 4 files |
 | Phase 02-portfolio-watchlist-api P01 | 1 | 3 tasks | 2 files |
 | Phase 02-portfolio-watchlist-api P02 | 2 | 3 tasks | 3 files |
+| Phase 02-portfolio-watchlist-api P03 | 2 | 4 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 02-portfolio-watchlist-api]: ImportError-safe try/except + pytest.fail() pattern for stubs testing not-yet-importable router modules
 - [Phase 02-portfolio-watchlist-api]: record_snapshot called outside trade transaction — snapshot failure is non-fatal; trade still commits
 - [Phase 02-portfolio-watchlist-api]: current_price falls back to avg_cost when PriceCache has no entry for cold-start safety
+- [Phase 02-portfolio-watchlist-api]: INSERT OR IGNORE keeps POST /api/watchlist idempotent — no 500 on duplicate ticker
+- [Phase 02-portfolio-watchlist-api]: AsyncMock patched onto app.state.source after TestClient start for integration test isolation without lifespan restart
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T07:08:31.413Z
-Stopped at: Completed 02-portfolio-watchlist-api/02-02-PLAN.md
+Last session: 2026-03-31T07:12:19.874Z
+Stopped at: Completed 02-portfolio-watchlist-api/02-03-PLAN.md
 Resume file: None

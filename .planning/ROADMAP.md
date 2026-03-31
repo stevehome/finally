@@ -13,7 +13,7 @@ Build a Bloomberg-terminal-aesthetic AI trading workstation in seven phases: fir
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Backend Foundation** - FastAPI app wired to SQLite, seeded with default data, market data running (completed 2026-03-30)
-- [ ] **Phase 2: Portfolio & Watchlist API** - Complete REST API for trading, portfolio snapshots, and watchlist management
+- [x] **Phase 2: Portfolio & Watchlist API** - Complete REST API for trading, portfolio snapshots, and watchlist management (completed 2026-03-31)
 - [ ] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode
 - [ ] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel
 - [ ] **Phase 5: Charts, Portfolio & Trade UI** - Main chart, heatmap, P&L chart, positions table, trade bar, AI chat panel
@@ -47,11 +47,11 @@ Plans:
   4. A trade with insufficient cash (buy) or insufficient shares (sell) returns an error response, not a 500
   5. Portfolio snapshots are recorded after each trade and every 30 seconds; `GET /api/portfolio/history` returns them
   6. `GET /api/watchlist` returns tickers with current prices; adding and removing tickers updates price streaming
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 02-01-PLAN.md — Test stubs (Wave 1): failing tests for all PORT and WATCH requirements
 - [x] 02-02-PLAN.md — Portfolio router (Wave 2): GET /api/portfolio, POST /api/portfolio/trade, GET /api/portfolio/history, snapshot background task, main.py wiring
-- [ ] 02-03-PLAN.md — Watchlist router (Wave 3): GET /api/watchlist, POST /api/watchlist, DELETE /api/watchlist/{ticker}
+- [x] 02-03-PLAN.md — Watchlist router (Wave 3): GET /api/watchlist, POST /api/watchlist, DELETE /api/watchlist/{ticker}
 
 ### Phase 3: Chat API
 **Goal**: Users can converse with an AI assistant that has portfolio context and can auto-execute trades and watchlist changes
@@ -126,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Backend Foundation | 2/2 | Complete   | 2026-03-30 |
-| 2. Portfolio & Watchlist API | 2/3 | In Progress|  |
+| 2. Portfolio & Watchlist API | 3/3 | Complete   | 2026-03-31 |
 | 3. Chat API | 0/TBD | Not started | - |
 | 4. Frontend Shell & Watchlist | 0/TBD | Not started | - |
 | 5. Charts, Portfolio & Trade UI | 0/TBD | Not started | - |
