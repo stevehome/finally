@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-chat-api/03-01-PLAN.md
-last_updated: "2026-03-31T11:02:01.080Z"
+stopped_at: Completed 03-chat-api/03-02-PLAN.md
+last_updated: "2026-03-31T11:05:59.866Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 ## Current Position
 
 Phase: 03 (chat-api) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-03-31
 
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-portfolio-watchlist-api P02 | 2 | 3 tasks | 3 files |
 | Phase 02-portfolio-watchlist-api P03 | 2 | 4 tasks | 5 files |
 | Phase 03-chat-api P01 | 3 | 1 tasks | 1 files |
+| Phase 03-chat-api P02 | 5 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 02-portfolio-watchlist-api]: AsyncMock patched onto app.state.source after TestClient start for integration test isolation without lifespan restart
 - [Phase 03-chat-api]: monkeypatch app.llm.call_llm (not litellm.completion) for trade/watchlist override tests — avoids coupling to internal LLM call chain
 - [Phase 03-chat-api]: LLM_MOCK=true set via monkeypatch.setenv in each test — ensures test isolation without env leakage
+- [Phase 03-chat-api]: execute_trade_internal returns error dict not HTTPException so chat router can collect all trade errors
+- [Phase 03-chat-api]: Internal helper pattern: router logic split into HTTP handler and non-HTTP helper returning error dict
 
 ### Pending Todos
 
@@ -92,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T11:02:01.077Z
-Stopped at: Completed 03-chat-api/03-01-PLAN.md
+Last session: 2026-03-31T11:05:59.860Z
+Stopped at: Completed 03-chat-api/03-02-PLAN.md
 Resume file: None
