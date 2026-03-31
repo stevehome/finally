@@ -1,19 +1,14 @@
-"""Chat API tests: POST /api/chat — CHAT-01 through CHAT-07 TDD stubs (RED phase)."""
+"""Chat API tests: POST /api/chat — CHAT-01 through CHAT-07."""
 
 import time
 
 import pytest
 from fastapi.testclient import TestClient
 
+from app.llm import ChatResponse, TradeAction, WatchlistAction
 from main import app
 
-try:
-    from app.llm import ChatResponse, TradeAction, WatchlistAction
-except ImportError:
-    pass  # xfail will handle this
 
-
-@pytest.mark.xfail(strict=True, reason="CHAT-01 not yet implemented")
 def test_chat_returns_message(monkeypatch) -> None:
     """CHAT-01: POST /api/chat returns 200 with a message field."""
     monkeypatch.setenv("LLM_MOCK", "true")
@@ -26,13 +21,12 @@ def test_chat_returns_message(monkeypatch) -> None:
     assert len(data["message"]) > 0
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-02 not yet implemented")
 def test_chat_includes_portfolio_context(monkeypatch) -> None:
     """CHAT-02: LLM is called with messages containing portfolio context."""
     monkeypatch.setenv("LLM_MOCK", "true")
     captured = {}
 
-    def fake_call_llm(messages: list) -> "ChatResponse":
+    def fake_call_llm(messages: list) -> ChatResponse:
         captured["messages"] = messages
         return ChatResponse(message="ok", trades=[], watchlist_changes=[])
 
@@ -50,12 +44,11 @@ def test_chat_includes_portfolio_context(monkeypatch) -> None:
     assert "cash" in system_content
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-03 not yet implemented")
 def test_chat_auto_executes_trade(monkeypatch) -> None:
     """CHAT-03: Trade in LLM response is auto-executed against the portfolio."""
     monkeypatch.setenv("LLM_MOCK", "true")
 
-    def fake_call_llm(messages: list) -> "ChatResponse":
+    def fake_call_llm(messages: list) -> ChatResponse:
         return ChatResponse(
             message="Buying 1 AAPL for you.",
             trades=[TradeAction(ticker="AAPL", side="buy", quantity=1)],
@@ -74,12 +67,11 @@ def test_chat_auto_executes_trade(monkeypatch) -> None:
     assert positions["AAPL"]["quantity"] == pytest.approx(1.0)
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-04 not yet implemented")
 def test_chat_applies_watchlist_changes(monkeypatch) -> None:
     """CHAT-04: Watchlist change in LLM response is applied."""
     monkeypatch.setenv("LLM_MOCK", "true")
 
-    def fake_call_llm(messages: list) -> "ChatResponse":
+    def fake_call_llm(messages: list) -> ChatResponse:
         return ChatResponse(
             message="Added PYPL to your watchlist.",
             trades=[],
@@ -92,18 +84,17 @@ def test_chat_applies_watchlist_changes(monkeypatch) -> None:
         client.post("/api/chat", json={"message": "Add PYPL to my watchlist"})
         watchlist = client.get("/api/watchlist").json()
 
-    tickers = [entry["ticker"] for entry in watchlist]
+    tickers = [entry["ticker"] for entry in watchlist["watchlist"]]
     assert "PYPL" in tickers
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-05 not yet implemented")
 def test_chat_history_persisted(monkeypatch) -> None:
     """CHAT-05: Prior conversation messages are included in subsequent LLM calls."""
     monkeypatch.setenv("LLM_MOCK", "true")
     call_count = 0
     captured_second = {}
 
-    def fake_call_llm(messages: list) -> "ChatResponse":
+    def fake_call_llm(messages: list) -> ChatResponse:
         nonlocal call_count
         call_count += 1
         if call_count == 2:
@@ -125,7 +116,6 @@ def test_chat_history_persisted(monkeypatch) -> None:
     assert any("Response 1" in c for c in assistant_contents)
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-06 not yet implemented")
 def test_chat_mock_mode(monkeypatch) -> None:
     """CHAT-06: LLM_MOCK=true returns a deterministic response without calling litellm."""
     monkeypatch.setenv("LLM_MOCK", "true")
@@ -145,12 +135,11 @@ def test_chat_mock_mode(monkeypatch) -> None:
     assert len(data["message"]) > 0
 
 
-@pytest.mark.xfail(strict=True, reason="CHAT-07 not yet implemented")
 def test_chat_failed_trade_in_response(monkeypatch) -> None:
     """CHAT-07: Failed trade validation reported in response body, not HTTP 400."""
     monkeypatch.setenv("LLM_MOCK", "true")
 
-    def fake_call_llm(messages: list) -> "ChatResponse":
+    def fake_call_llm(messages: list) -> ChatResponse:
         # User has no AAPL shares — selling 999 will fail validation
         return ChatResponse(
             message="Selling 999 AAPL for you.",

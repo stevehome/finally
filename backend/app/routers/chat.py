@@ -9,8 +9,9 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Request
 from pydantic import BaseModel
 
+import app.llm as llm_module
 from app.db import get_connection
-from app.llm import build_portfolio_context, build_system_prompt, call_llm, load_history
+from app.llm import build_portfolio_context, build_system_prompt, load_history
 from app.routers.portfolio import execute_trade_internal
 from app.routers.watchlist import add_ticker_internal, remove_ticker_internal
 
@@ -76,7 +77,7 @@ async def chat(request: Request, body: ChatRequest) -> dict:
     )
 
     # 4. Call LLM in a thread to avoid blocking the event loop
-    llm_response = await asyncio.to_thread(call_llm, messages)
+    llm_response = await asyncio.to_thread(llm_module.call_llm, messages)
 
     # 5. Auto-execute trades
     trade_results = []
