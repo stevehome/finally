@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 02-portfolio-watchlist-api/02-03-PLAN.md
-last_updated: "2026-03-31T07:14:52.864Z"
+status: executing
+stopped_at: Completed 03-chat-api/03-01-PLAN.md
+last_updated: "2026-03-31T11:02:01.080Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 8
+  completed_plans: 6
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-30)
 
 **Core value:** A Bloomberg-terminal trading workstation where users watch live prices stream, trade a simulated portfolio, and have an AI execute trades on their behalf — one browser tab, zero setup.
-**Current focus:** Phase 02 — portfolio-watchlist-api
+**Current focus:** Phase 03 — chat-api
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 03 (chat-api) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-portfolio-watchlist-api P01 | 1 | 3 tasks | 2 files |
 | Phase 02-portfolio-watchlist-api P02 | 2 | 3 tasks | 3 files |
 | Phase 02-portfolio-watchlist-api P03 | 2 | 4 tasks | 5 files |
+| Phase 03-chat-api P01 | 3 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Recent decisions affecting current work:
 - [Phase 02-portfolio-watchlist-api]: current_price falls back to avg_cost when PriceCache has no entry for cold-start safety
 - [Phase 02-portfolio-watchlist-api]: INSERT OR IGNORE keeps POST /api/watchlist idempotent — no 500 on duplicate ticker
 - [Phase 02-portfolio-watchlist-api]: AsyncMock patched onto app.state.source after TestClient start for integration test isolation without lifespan restart
+- [Phase 03-chat-api]: monkeypatch app.llm.call_llm (not litellm.completion) for trade/watchlist override tests — avoids coupling to internal LLM call chain
+- [Phase 03-chat-api]: LLM_MOCK=true set via monkeypatch.setenv in each test — ensures test isolation without env leakage
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T07:12:19.874Z
-Stopped at: Completed 02-portfolio-watchlist-api/02-03-PLAN.md
+Last session: 2026-03-31T11:02:01.077Z
+Stopped at: Completed 03-chat-api/03-01-PLAN.md
 Resume file: None

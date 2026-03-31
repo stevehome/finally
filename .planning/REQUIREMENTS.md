@@ -35,13 +35,13 @@
 
 ### Chat API
 
-- [ ] **CHAT-01**: User can send a chat message and receive an AI response
-- [ ] **CHAT-02**: AI response includes the user's portfolio context (cash, positions, prices)
-- [ ] **CHAT-03**: AI can execute trades mentioned in its response (auto-executed, no confirmation)
-- [ ] **CHAT-04**: AI can add/remove watchlist tickers mentioned in its response
-- [ ] **CHAT-05**: Chat conversation history persists and is included in subsequent LLM calls
-- [ ] **CHAT-06**: LLM mock mode returns deterministic responses when LLM_MOCK=true
-- [ ] **CHAT-07**: Failed trade validation errors are included in chat response
+- [x] **CHAT-01**: User can send a chat message and receive an AI response
+- [x] **CHAT-02**: AI response includes the user's portfolio context (cash, positions, prices)
+- [x] **CHAT-03**: AI can execute trades mentioned in its response (auto-executed, no confirmation)
+- [x] **CHAT-04**: AI can add/remove watchlist tickers mentioned in its response
+- [x] **CHAT-05**: Chat conversation history persists and is included in subsequent LLM calls
+- [x] **CHAT-06**: LLM mock mode returns deterministic responses when LLM_MOCK=true
+- [x] **CHAT-07**: Failed trade validation errors are included in chat response
 
 ### Frontend Shell
 
