@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Backend Foundation** - FastAPI app wired to SQLite, seeded with default data, market data running (completed 2026-03-30)
 - [x] **Phase 2: Portfolio & Watchlist API** - Complete REST API for trading, portfolio snapshots, and watchlist management (completed 2026-03-31)
-- [ ] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode
+- [x] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode (completed 2026-03-31)
 - [ ] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel
 - [ ] **Phase 5: Charts, Portfolio & Trade UI** - Main chart, heatmap, P&L chart, positions table, trade bar, AI chat panel
 - [ ] **Phase 6: Docker & Deployment** - Multi-stage Dockerfile, start/stop scripts, persistent volume
@@ -64,11 +64,11 @@ Plans:
   4. Conversation history from prior calls is included in each new LLM request
   5. With `LLM_MOCK=true`, the endpoint returns deterministic responses without calling OpenRouter
   6. Trade validation failures (e.g., insufficient cash) are reported in the chat response rather than silently dropped
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 03-01-PLAN.md — TDD test stubs (Wave 1): failing tests for all CHAT requirements
 - [x] 03-02-PLAN.md — LLM module + extract internal helpers (Wave 2): app/llm.py, refactor portfolio.py and watchlist.py
-- [ ] 03-03-PLAN.md — Chat router + green tests (Wave 3): POST /api/chat endpoint, wire into main.py, all tests passing
+- [x] 03-03-PLAN.md — Chat router + green tests (Wave 3): POST /api/chat endpoint, wire into main.py, all tests passing
 
 ### Phase 4: Frontend Shell & Watchlist
 **Goal**: The Next.js app is served by FastAPI, displays a dark trading terminal, connects to the SSE stream, and shows a live-updating watchlist
@@ -131,7 +131,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Backend Foundation | 2/2 | Complete   | 2026-03-30 |
 | 2. Portfolio & Watchlist API | 3/3 | Complete   | 2026-03-31 |
-| 3. Chat API | 2/3 | In Progress|  |
+| 3. Chat API | 3/3 | Complete   | 2026-03-31 |
 | 4. Frontend Shell & Watchlist | 0/TBD | Not started | - |
 | 5. Charts, Portfolio & Trade UI | 0/TBD | Not started | - |
 | 6. Docker & Deployment | 0/TBD | Not started | - |
