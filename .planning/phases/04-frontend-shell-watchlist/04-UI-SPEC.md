@@ -1,7 +1,8 @@
 ---
 phase: 4
 slug: frontend-shell-watchlist
-status: draft
+status: approved
+reviewed_at: 2026-03-31
 shadcn_initialized: false
 preset: none
 created: 2026-03-31
