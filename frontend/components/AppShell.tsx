@@ -8,6 +8,8 @@ import Header from './Header'
 import WatchlistPanel from './WatchlistPanel'
 import MainChart from './MainChart'
 import PortfolioPanels from './PortfolioPanels'
+import TradeBar from './TradeBar'
+import ChatPanel from './ChatPanel'
 
 export default function AppShell() {
   const { prices, connected, sparkHistory } = usePriceStream()
@@ -63,20 +65,14 @@ export default function AppShell() {
           gridTemplateColumns: '1fr 380px',
           overflow: 'hidden',
         }}>
-          <div style={{ borderRight: '1px solid #30363d', overflow: 'hidden' }}>
-            <PortfolioPanels portfolio={portfolio} />
+          <div style={{ borderRight: '1px solid #30363d', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <TradeBar refetch={refetch} />
+            <div style={{ flex: 1, overflow: 'hidden' }}>
+              <PortfolioPanels portfolio={portfolio} />
+            </div>
           </div>
 
-          {/* Chat panel placeholder — filled in Plan 05-04 */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#8b949e',
-            fontSize: 12,
-          }}>
-            Chat coming soon
-          </div>
+          <ChatPanel />
         </div>
       </div>
     </div>
