@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode (completed 2026-03-31)
 - [x] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel (completed 2026-04-01)
 - [x] **Phase 5: Charts, Portfolio & Trade UI** - Main chart, heatmap, P&L chart, positions table, trade bar, AI chat panel (completed 2026-04-01)
-- [ ] **Phase 6: Docker & Deployment** - Multi-stage Dockerfile, start/stop scripts, persistent volume
+- [x] **Phase 6: Docker & Deployment** - Multi-stage Dockerfile, start/stop scripts, persistent volume
 - [ ] **Phase 7: Testing** - Backend unit tests, E2E Playwright suite, test infrastructure
 
 ## Phase Details
@@ -145,5 +145,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Chat API | 3/3 | Complete   | 2026-03-31 |
 | 4. Frontend Shell & Watchlist | 3/4 | In Progress|  |
 | 5. Charts, Portfolio & Trade UI | 5/5 | Complete | 2026-04-01 |
-| 6. Docker & Deployment | 0/TBD | Not started | - |
+| 6. Docker & Deployment | 4/4 | Complete | 2026-04-01 |
 | 7. Testing | 0/TBD | Not started | - |
