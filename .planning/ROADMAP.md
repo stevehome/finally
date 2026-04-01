@@ -99,12 +99,12 @@ Plans:
   4. The positions table shows ticker, quantity, avg cost, current price, unrealized P&L, and % change — updated after every trade
   5. The trade bar lets the user type a ticker and quantity, click Buy or Sell, and the portfolio display updates immediately without a page reload
   6. The AI chat panel shows a message input, scrolling history, a loading indicator while awaiting response, and inline confirmations for trade/watchlist actions
-**Plans**: 5 total (1 complete)
+**Plans**: 5 total (4 complete)
 Plans:
 - [x] 05-01-PLAN.md — usePortfolio refetch callback + AppShell nested grid (60%/40% rows, 1fr/380px bottom cols)
 - [ ] 05-02-PLAN.md — Main chart area (lightweight-charts, selected ticker)
 - [ ] 05-03-PLAN.md — Portfolio heatmap, P&L chart, positions table
-- [ ] 05-04-PLAN.md — Trade bar + AI chat panel wired to /api/chat
+- [x] 05-04-PLAN.md — Trade bar + AI chat panel wired to /api/chat
 - [ ] 05-05-PLAN.md — Phase integration and verification
 **UI hint**: yes
 
@@ -144,6 +144,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 2. Portfolio & Watchlist API | 3/3 | Complete   | 2026-03-31 |
 | 3. Chat API | 3/3 | Complete   | 2026-03-31 |
 | 4. Frontend Shell & Watchlist | 3/4 | In Progress|  |
-| 5. Charts, Portfolio & Trade UI | 1/5 | In Progress | - |
+| 5. Charts, Portfolio & Trade UI | 4/5 | In Progress | - |
 | 6. Docker & Deployment | 0/TBD | Not started | - |
 | 7. Testing | 0/TBD | Not started | - |

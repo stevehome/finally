@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-01-PLAN.md
+stopped_at: Completed 05-04-PLAN.md
 last_updated: "2026-03-31"
-last_activity: 2026-03-31 -- Phase 5 Plan 1 complete: usePortfolio refetch + AppShell nested grid
+last_activity: 2026-03-31 -- Phase 5 Plan 4 complete: TradeBar, useChat, ChatMessage, ChatPanel wired into AppShell
 progress:
   total_phases: 7
   completed_phases: 4
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 ## Current Position
 
 Phase: 5 (Charts, Portfolio & Trade UI) — EXECUTING
-Plan: 2 of 5
+Plan: 5 of 5
 Status: Executing Phase 5
-Last activity: 2026-03-31 -- Phase 5 Plan 1 complete: usePortfolio refetch + AppShell nested grid
+Last activity: 2026-03-31 -- Phase 5 Plan 4 complete: TradeBar, useChat, ChatMessage, ChatPanel wired into AppShell
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -64,6 +64,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-frontend-shell-watchlist P02 | 2 | 2 tasks | 6 files |
 | Phase 04 P03 | 15 | 2 tasks | 4 files |
 | Phase 05 P01 | 2 | 2 tasks | 2 files |
+| Phase 05 P04 | 6 | 6 tasks | 6 files |
 
 ## Accumulated Context
 
