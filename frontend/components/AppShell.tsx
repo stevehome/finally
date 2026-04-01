@@ -6,6 +6,8 @@ import { usePortfolio } from '@/hooks/usePortfolio'
 import { useWatchlist } from '@/hooks/useWatchlist'
 import Header from './Header'
 import WatchlistPanel from './WatchlistPanel'
+import MainChart from './MainChart'
+import PortfolioPanels from './PortfolioPanels'
 
 export default function AppShell() {
   const { prices, connected, sparkHistory } = usePriceStream()
@@ -48,20 +50,12 @@ export default function AppShell() {
         overflow: 'hidden',
         backgroundColor: '#0d1117',
       }}>
-        {/* Top row: main chart (placeholder — filled in Plan 05-02) */}
-        <div style={{
-          backgroundColor: '#0d1117',
-          borderBottom: '1px solid #30363d',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#8b949e',
-          fontSize: 12,
-        }}>
-          {selectedTicker
-            ? `${selectedTicker} — chart loading…`
-            : 'Select a ticker to view chart'}
-        </div>
+        {/* Top row: main chart */}
+        <MainChart
+          ticker={selectedTicker}
+          sparkHistory={sparkHistory}
+          prices={prices}
+        />
 
         {/* Bottom row: portfolio panels left + chat right */}
         <div style={{
@@ -69,16 +63,8 @@ export default function AppShell() {
           gridTemplateColumns: '1fr 380px',
           overflow: 'hidden',
         }}>
-          {/* Portfolio panels placeholder — filled in Plan 05-03 */}
-          <div style={{
-            borderRight: '1px solid #30363d',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#8b949e',
-            fontSize: 12,
-          }}>
-            Portfolio panels coming soon
+          <div style={{ borderRight: '1px solid #30363d', overflow: 'hidden' }}>
+            <PortfolioPanels portfolio={portfolio} />
           </div>
 
           {/* Chat panel placeholder — filled in Plan 05-04 */}
