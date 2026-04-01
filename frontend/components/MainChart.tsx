@@ -51,17 +51,21 @@ export default function MainChart({ ticker, sparkHistory, prices }: MainChartPro
     }
   }, [])
 
-  // When ticker changes: load accumulated history from sparkHistory ref
+  // When ticker changes: load deduplicated history from sparkHistory ref
   useEffect(() => {
     const series = seriesRef.current
     const chart = chartRef.current
     if (!series || !chart || !ticker) return
     if (ticker !== prevTickerRef.current) {
-      const history = sparkHistory.current[ticker] ?? []
-      series.setData(
-        history.map(p => ({ time: Math.floor(p.time) as UTCTimestamp, value: p.value }))
-      )
-      chart.timeScale().fitContent()
+      const raw = sparkHistory.current[ticker] ?? []
+      // Deduplicate by time (keep last value per second) and ensure strict ascending order
+      const seen = new Map<number, number>()
+      for (const p of raw) seen.set(Math.floor(p.time), p.value)
+      const deduped = Array.from(seen.entries())
+        .sort((a, b) => a[0] - b[0])
+        .map(([time, value]) => ({ time: time as UTCTimestamp, value }))
+      series.setData(deduped)
+      if (deduped.length > 0) chart.timeScale().fitContent()
       prevTickerRef.current = ticker
     }
   }, [ticker, sparkHistory])
@@ -72,7 +76,12 @@ export default function MainChart({ ticker, sparkHistory, prices }: MainChartPro
     if (!series || !ticker) return
     const update = prices[ticker]
     if (!update) return
-    series.update({ time: Math.floor(update.timestamp) as UTCTimestamp, value: update.price })
+    const t = Math.floor(update.timestamp) as UTCTimestamp
+    try {
+      series.update({ time: t, value: update.price })
+    } catch {
+      // lightweight-charts throws if time is not >= last point; silently skip
+    }
   }, [prices, ticker])
 
   return (
