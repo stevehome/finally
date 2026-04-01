@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { WatchlistItem } from '@/types/market'
 
 export function useWatchlist() {
   const [tickers, setTickers] = useState<string[]>([])
 
-  useEffect(() => {
+  const refetch = useCallback(() => {
     fetch('/api/watchlist')
       .then(r => r.json())
       .then((data: { watchlist: WatchlistItem[] }) =>
@@ -15,5 +15,7 @@ export function useWatchlist() {
       .catch(() => {})
   }, [])
 
-  return tickers
+  useEffect(() => { refetch() }, [refetch])
+
+  return { tickers, refetch }
 }

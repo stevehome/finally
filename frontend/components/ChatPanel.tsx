@@ -4,8 +4,13 @@ import { useState, useRef, useEffect } from 'react'
 import { useChat } from '@/hooks/useChat'
 import ChatMessage from './ChatMessage'
 
-export default function ChatPanel() {
-  const { messages, loading, sendMessage } = useChat()
+interface ChatPanelProps {
+  onPortfolioChange?: () => void
+  onWatchlistChange?: () => void
+}
+
+export default function ChatPanel({ onPortfolioChange, onWatchlistChange }: ChatPanelProps) {
+  const { messages, loading, sendMessage } = useChat({ onPortfolioChange, onWatchlistChange })
   const [input, setInput] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 

@@ -28,7 +28,12 @@ export type ChatMessage = {
   actions?: ChatActions
 }
 
-export function useChat() {
+interface UseChatOptions {
+  onPortfolioChange?: () => void
+  onWatchlistChange?: () => void
+}
+
+export function useChat({ onPortfolioChange, onWatchlistChange }: UseChatOptions = {}) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -47,6 +52,8 @@ export function useChat() {
         content: data.message,
         actions: data.actions,
       }])
+      if (data.actions?.trades_executed?.length > 0) onPortfolioChange?.()
+      if (data.actions?.watchlist_changes?.length > 0) onWatchlistChange?.()
     } catch {
       // keep loading cleared; don't crash the UI
     } finally {

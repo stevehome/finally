@@ -14,7 +14,7 @@ import ChatPanel from './ChatPanel'
 export default function AppShell() {
   const { prices, connected, sparkHistory } = usePriceStream()
   const { portfolio, refetch } = usePortfolio()
-  const tickers = useWatchlist()
+  const { tickers, refetch: refetchWatchlist } = useWatchlist()
   const [selectedTicker, setSelectedTicker] = useState<string | null>(null)
 
   return (
@@ -72,7 +72,7 @@ export default function AppShell() {
             </div>
           </div>
 
-          <ChatPanel />
+          <ChatPanel onPortfolioChange={refetch} onWatchlistChange={refetchWatchlist} />
         </div>
       </div>
     </div>
