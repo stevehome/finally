@@ -56,8 +56,8 @@ class ChatResponse(BaseModel):
 
 
 _MOCK_RESPONSE = ChatResponse(
-    message="FinAlly here (mock mode). Portfolio looks good — $10,000 cash, no open positions.",
-    trades=[],
+    message="FinAlly here (mock mode). Portfolio looks good — buying 1 AAPL as a demo.",
+    trades=[TradeAction(ticker="AAPL", side="buy", quantity=1)],
     watchlist_changes=[],
 )
 

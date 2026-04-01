@@ -54,7 +54,7 @@ export default function ChatPanel({ onPortfolioChange, onWatchlistChange }: Chat
       </div>
 
       {/* Message history */}
-      <div style={{
+      <div data-testid="chat-messages" style={{
         flex: 1,
         overflowY: 'auto',
         padding: '8px 12px',

@@ -5,7 +5,7 @@ import type { ChatMessage as ChatMsg } from '@/hooks/useChat'
 export default function ChatMessage({ msg }: { msg: ChatMsg }) {
   const isUser = msg.role === 'user'
   return (
-    <div style={{
+    <div data-testid="chat-message" style={{
       marginBottom: 12,
       display: 'flex',
       flexDirection: 'column',

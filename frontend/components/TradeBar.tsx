@@ -86,6 +86,7 @@ export default function TradeBar({ refetch }: TradeBarProps) {
         onChange={e => setTicker(e.target.value.toUpperCase())}
         placeholder="TICKER"
         maxLength={5}
+        data-testid="trade-ticker"
         style={{ ...inputStyle, width: 72 }}
       />
       <input
@@ -95,11 +96,13 @@ export default function TradeBar({ refetch }: TradeBarProps) {
         placeholder="Qty"
         min="0"
         step="any"
+        data-testid="trade-qty"
         style={{ ...inputStyle, width: 72 }}
       />
       <button
         onClick={() => handleTrade('buy')}
         disabled={!canSubmit}
+        data-testid="buy-btn"
         style={btnStyle('#22c55e', !canSubmit)}
       >
         Buy
@@ -107,12 +110,13 @@ export default function TradeBar({ refetch }: TradeBarProps) {
       <button
         onClick={() => handleTrade('sell')}
         disabled={!canSubmit}
+        data-testid="sell-btn"
         style={btnStyle('#ef4444', !canSubmit)}
       >
         Sell
       </button>
       {error && (
-        <span style={{ color: '#ef4444', fontSize: 11, fontFamily: 'monospace' }}>
+        <span data-testid="trade-error" style={{ color: '#ef4444', fontSize: 11, fontFamily: 'monospace' }}>
           {error}
         </span>
       )}

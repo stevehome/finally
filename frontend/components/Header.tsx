@@ -34,14 +34,14 @@ export default function Header({ portfolio, connected }: HeaderProps) {
       <div className="flex items-center gap-6 text-sm">
         <div className="flex flex-col items-end">
           <span className="text-text-muted text-xs leading-none">Portfolio</span>
-          <span className="text-text-primary font-mono font-semibold">
+          <span className="text-text-primary font-mono font-semibold" data-testid="portfolio-value">
             {portfolio ? `$${fmt(portfolio.total_value)}` : '—'}
           </span>
         </div>
 
         <div className="flex flex-col items-end">
           <span className="text-text-muted text-xs leading-none">Cash</span>
-          <span className="text-text-primary font-mono">
+          <span className="text-text-primary font-mono" data-testid="cash-balance">
             {portfolio ? `$${fmt(portfolio.cash_balance)}` : '—'}
           </span>
         </div>

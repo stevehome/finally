@@ -54,6 +54,7 @@ export default function WatchlistRow({
   return (
     <div
       onClick={() => onSelect(ticker)}
+      data-testid={`watchlist-row-${ticker}`}
       className={`flex items-center justify-between px-3 py-2 cursor-pointer border-b text-xs ${flashClass}`}
       style={{
         borderColor: '#30363d',
