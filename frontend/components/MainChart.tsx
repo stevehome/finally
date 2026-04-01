@@ -76,33 +76,31 @@ export default function MainChart({ ticker, sparkHistory, prices }: MainChartPro
   }, [prices, ticker])
 
   return (
-    <div style={{ backgroundColor: '#0d1117', borderBottom: '1px solid #30363d', height: '100%' }}>
-      {ticker ? (
-        <>
-          <div style={{
-            padding: '6px 12px',
-            color: '#e6edf3',
-            fontSize: 12,
-            fontFamily: 'monospace',
-            height: 28,
-            lineHeight: '16px',
-          }}>
-            {ticker}
-          </div>
-          <div ref={containerRef} style={{ height: 'calc(100% - 28px)' }} />
-        </>
-      ) : (
+    <div style={{ backgroundColor: '#0d1117', borderBottom: '1px solid #30363d', height: '100%', position: 'relative' }}>
+      {/* Placeholder — shown only when no ticker selected */}
+      {!ticker && (
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          color: '#8b949e',
-          fontSize: 12,
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: '#8b949e', fontSize: 12,
         }}>
           Select a ticker to view chart
         </div>
       )}
+      {/* Ticker label */}
+      <div style={{
+        padding: '6px 12px',
+        color: '#e6edf3',
+        fontSize: 12,
+        fontFamily: 'monospace',
+        height: 28,
+        lineHeight: '16px',
+        visibility: ticker ? 'visible' : 'hidden',
+      }}>
+        {ticker ?? ''}
+      </div>
+      {/* Chart container — always mounted so createChart runs on mount */}
+      <div ref={containerRef} style={{ height: 'calc(100% - 28px)' }} />
     </div>
   )
 }
