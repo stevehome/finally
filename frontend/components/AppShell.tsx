@@ -9,7 +9,7 @@ import WatchlistPanel from './WatchlistPanel'
 
 export default function AppShell() {
   const { prices, connected, sparkHistory } = usePriceStream()
-  const portfolio = usePortfolio()
+  const { portfolio, refetch } = usePortfolio()
   const tickers = useWatchlist()
   const [selectedTicker, setSelectedTicker] = useState<string | null>(null)
 
@@ -40,18 +40,58 @@ export default function AppShell() {
         />
       </div>
 
-      {/* Main area — placeholder for Phase 5 */}
-      <div
-        className="flex items-center justify-center"
-        style={{ backgroundColor: '#0d1117' }}
-      >
-        {selectedTicker ? (
-          <p className="text-text-muted text-sm font-mono">
-            {selectedTicker} — chart coming in Phase 5
-          </p>
-        ) : (
-          <p className="text-text-muted text-xs">Select a ticker to view chart</p>
-        )}
+      {/* Main area — nested grid for Phase 5 panels */}
+      <div style={{
+        display: 'grid',
+        gridTemplateRows: '60% 40%',
+        height: '100%',
+        overflow: 'hidden',
+        backgroundColor: '#0d1117',
+      }}>
+        {/* Top row: main chart (placeholder — filled in Plan 05-02) */}
+        <div style={{
+          backgroundColor: '#0d1117',
+          borderBottom: '1px solid #30363d',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#8b949e',
+          fontSize: 12,
+        }}>
+          {selectedTicker
+            ? `${selectedTicker} — chart loading…`
+            : 'Select a ticker to view chart'}
+        </div>
+
+        {/* Bottom row: portfolio panels left + chat right */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 380px',
+          overflow: 'hidden',
+        }}>
+          {/* Portfolio panels placeholder — filled in Plan 05-03 */}
+          <div style={{
+            borderRight: '1px solid #30363d',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#8b949e',
+            fontSize: 12,
+          }}>
+            Portfolio panels coming soon
+          </div>
+
+          {/* Chat panel placeholder — filled in Plan 05-04 */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#8b949e',
+            fontSize: 12,
+          }}>
+            Chat coming soon
+          </div>
+        </div>
       </div>
     </div>
   )
