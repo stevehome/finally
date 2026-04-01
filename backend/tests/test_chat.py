@@ -160,3 +160,82 @@ def test_chat_failed_trade_in_response(monkeypatch) -> None:
     failed = data["actions"]["trades_failed"]
     assert len(failed) > 0
     assert any("error" in t and t["error"] for t in failed)
+
+
+def test_build_portfolio_context_with_positions() -> None:
+    """build_portfolio_context with a position returns string with ticker and cash."""
+    import uuid
+
+    from app.db import get_connection, init_db
+    from app.llm import build_portfolio_context
+    from app.market import PriceCache
+
+    init_db()
+    cache = PriceCache()
+    cache.update("AAPL", 150.0)
+
+    # Insert a position directly into the DB
+    conn = get_connection()
+    conn.execute(
+        "INSERT INTO positions (id, user_id, ticker, quantity, avg_cost, updated_at) "
+        "VALUES (?, 'default', 'AAPL', 2.0, 145.0, datetime('now'))",
+        (str(uuid.uuid4()),),
+    )
+    conn.commit()
+    conn.close()
+
+    context = build_portfolio_context(cache, "default")
+    assert "AAPL" in context
+    assert "cash" in context.lower()
+
+
+def test_load_history_chronological_order() -> None:
+    """load_history returns messages oldest-first (chronological order)."""
+    import uuid
+
+    from app.db import get_connection, init_db
+    from app.llm import load_history
+
+    init_db()
+
+    conn = get_connection()
+    conn.execute(
+        "INSERT INTO chat_messages (id, user_id, role, content, created_at) VALUES (?, 'default', 'user', 'First message', ?)",
+        (str(uuid.uuid4()), "2024-01-01T10:00:00"),
+    )
+    conn.execute(
+        "INSERT INTO chat_messages (id, user_id, role, content, created_at) VALUES (?, 'default', 'assistant', 'First reply', ?)",
+        (str(uuid.uuid4()), "2024-01-01T10:00:01"),
+    )
+    conn.commit()
+    conn.close()
+
+    history = load_history("default")
+    assert len(history) == 2
+    assert history[0]["role"] == "user"
+    assert history[0]["content"] == "First message"
+    assert history[1]["role"] == "assistant"
+    assert history[1]["content"] == "First reply"
+
+
+def test_call_llm_raises_without_api_key(monkeypatch) -> None:
+    """call_llm raises ValueError when OPENROUTER_API_KEY unset and LLM_MOCK not true."""
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    monkeypatch.delenv("LLM_MOCK", raising=False)
+
+    import importlib
+
+    import app.llm as llm_mod
+
+    importlib.reload(llm_mod)
+
+    with pytest.raises(ValueError, match="OPENROUTER_API_KEY"):
+        llm_mod.call_llm([{"role": "user", "content": "hello"}])
+
+
+def test_build_system_prompt_contains_context() -> None:
+    """build_system_prompt interpolates the portfolio context string into the template."""
+    from app.llm import build_system_prompt
+
+    prompt = build_system_prompt("my_unique_context_string_xyz")
+    assert "my_unique_context_string_xyz" in prompt

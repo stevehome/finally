@@ -161,3 +161,114 @@ def test_portfolio_history() -> None:
     assert len(snapshots) >= 1
     assert "total_value" in snapshots[0]
     assert "recorded_at" in snapshots[0]
+
+
+def test_sell_all_shares_removes_position() -> None:
+    """Selling all shares of a ticker removes the position row entirely."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1, "side": "buy"})
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1, "side": "sell"})
+        portfolio = client.get("/api/portfolio").json()
+
+    assert portfolio["positions"] == []
+
+
+def test_buy_updates_avg_cost() -> None:
+    """Second buy of same ticker updates avg_cost to weighted average."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        # Buy 1 share, record price
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1, "side": "buy"})
+        p1 = client.get("/api/portfolio").json()
+        cost1 = p1["positions"][0]["avg_cost"]
+        cash1 = p1["cash_balance"]
+
+        # Buy 1 more share at (possibly) same simulator price
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1, "side": "buy"})
+        p2 = client.get("/api/portfolio").json()
+        cost2 = p2["positions"][0]["avg_cost"]
+        cash2 = p2["cash_balance"]
+
+    # avg_cost should be the average of the two purchase prices
+    price_of_second_buy = (10000.0 - cash2) - (10000.0 - cash1)
+    expected_avg = (cost1 + price_of_second_buy) / 2
+    assert cost2 == pytest.approx(expected_avg, rel=1e-4)
+    assert p2["positions"][0]["quantity"] == pytest.approx(2.0)
+
+
+def test_buy_fractional_shares() -> None:
+    """Buy 0.5 shares — quantity shows 0.5 in portfolio."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        response = client.post(
+            "/api/portfolio/trade",
+            json={"ticker": "AAPL", "quantity": 0.5, "side": "buy"},
+        )
+        assert response.status_code == 200
+        portfolio = client.get("/api/portfolio").json()
+
+    positions = {p["ticker"]: p for p in portfolio["positions"]}
+    assert "AAPL" in positions
+    assert positions["AAPL"]["quantity"] == pytest.approx(0.5)
+
+
+def test_sell_fractional_shares() -> None:
+    """Buy 1.0 then sell 0.5 — quantity shows 0.5 remaining."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1.0, "side": "buy"})
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 0.5, "side": "sell"})
+        portfolio = client.get("/api/portfolio").json()
+
+    positions = {p["ticker"]: p for p in portfolio["positions"]}
+    assert "AAPL" in positions
+    assert positions["AAPL"]["quantity"] == pytest.approx(0.5)
+
+
+def test_invalid_trade_side_returns_400() -> None:
+    """Trade with side='hold' (invalid) returns HTTP 400."""
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/portfolio/trade",
+            json={"ticker": "AAPL", "quantity": 1, "side": "hold"},
+        )
+    assert response.status_code == 400
+    assert "detail" in response.json()
+
+
+def test_trade_response_shape() -> None:
+    """Successful buy response contains status, ticker, side, quantity, price fields."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        response = client.post(
+            "/api/portfolio/trade",
+            json={"ticker": "AAPL", "quantity": 1, "side": "buy"},
+        )
+    assert response.status_code == 200
+    data = response.json()
+    for field in ("status", "ticker", "side", "quantity", "price"):
+        assert field in data, f"Missing field: {field}"
+
+
+def test_portfolio_positions_shape() -> None:
+    """Each position in GET /api/portfolio has all required fields."""
+    with TestClient(app) as client:
+        time.sleep(0.1)
+        client.post("/api/portfolio/trade", json={"ticker": "AAPL", "quantity": 1, "side": "buy"})
+        portfolio = client.get("/api/portfolio").json()
+
+    assert len(portfolio["positions"]) == 1
+    pos = portfolio["positions"][0]
+    for field in ("ticker", "quantity", "avg_cost", "current_price", "unrealized_pnl", "value"):
+        assert field in pos, f"Missing position field: {field}"
+
+
+def test_portfolio_history_empty() -> None:
+    """Fresh DB with no trades returns snapshots=[] from GET /api/portfolio/history."""
+    with TestClient(app) as client:
+        response = client.get("/api/portfolio/history")
+    assert response.status_code == 200
+    data = response.json()
+    assert "snapshots" in data
+    assert data["snapshots"] == []
