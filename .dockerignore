@@ -1,0 +1,30 @@
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/.next/cache/
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+
+# Database (lives on a volume, not baked into image)
+db/*.db
+
+# Secrets and env
+.env
+
+# Planning docs (not needed in image)
+.planning/
+planning/
+
+# Git
+.git/
+.gitignore
+
+# Scripts (not needed inside container)
+scripts/
+
+# Test artifacts
+test/
