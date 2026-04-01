@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-03-31T15:15:21.543Z"
-last_activity: 2026-03-31
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-31"
+last_activity: 2026-03-31 -- Phase 5 Plan 1 complete: usePortfolio refetch + AppShell nested grid
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 12
-  completed_plans: 11
+  completed_phases: 4
+  total_plans: 17
+  completed_plans: 12
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-30)
 
 **Core value:** A Bloomberg-terminal trading workstation where users watch live prices stream, trade a simulated portfolio, and have an AI execute trades on their behalf — one browser tab, zero setup.
-**Current focus:** Phase 04 — frontend-shell-watchlist
+**Current focus:** Phase 5 — Charts, Portfolio & Trade UI
 
 ## Current Position
 
-Phase: 04 (frontend-shell-watchlist) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
-Last activity: 2026-03-31
+Phase: 5 (Charts, Portfolio & Trade UI) — EXECUTING
+Plan: 2 of 5
+Status: Executing Phase 5
+Last activity: 2026-03-31 -- Phase 5 Plan 1 complete: usePortfolio refetch + AppShell nested grid
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -63,6 +63,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-frontend-shell-watchlist P01 | 8 | 2 tasks | 9 files |
 | Phase 04-frontend-shell-watchlist P02 | 2 | 2 tasks | 6 files |
 | Phase 04 P03 | 15 | 2 tasks | 4 files |
+| Phase 05 P01 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 

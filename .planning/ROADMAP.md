@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Backend Foundation** - FastAPI app wired to SQLite, seeded with default data, market data running (completed 2026-03-30)
 - [x] **Phase 2: Portfolio & Watchlist API** - Complete REST API for trading, portfolio snapshots, and watchlist management (completed 2026-03-31)
 - [x] **Phase 3: Chat API** - LLM integration (LiteLLM/Cerebras) with auto-execute and mock mode (completed 2026-03-31)
-- [ ] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel
+- [x] **Phase 4: Frontend Shell & Watchlist** - Next.js static export served by FastAPI, dark theme, SSE live prices, watchlist panel (completed 2026-04-01)
 - [ ] **Phase 5: Charts, Portfolio & Trade UI** - Main chart, heatmap, P&L chart, positions table, trade bar, AI chat panel
 - [ ] **Phase 6: Docker & Deployment** - Multi-stage Dockerfile, start/stop scripts, persistent volume
 - [ ] **Phase 7: Testing** - Backend unit tests, E2E Playwright suite, test infrastructure
@@ -99,7 +99,13 @@ Plans:
   4. The positions table shows ticker, quantity, avg cost, current price, unrealized P&L, and % change — updated after every trade
   5. The trade bar lets the user type a ticker and quantity, click Buy or Sell, and the portfolio display updates immediately without a page reload
   6. The AI chat panel shows a message input, scrolling history, a loading indicator while awaiting response, and inline confirmations for trade/watchlist actions
-**Plans**: TBD
+**Plans**: 5 total (1 complete)
+Plans:
+- [x] 05-01-PLAN.md — usePortfolio refetch callback + AppShell nested grid (60%/40% rows, 1fr/380px bottom cols)
+- [ ] 05-02-PLAN.md — Main chart area (lightweight-charts, selected ticker)
+- [ ] 05-03-PLAN.md — Portfolio heatmap, P&L chart, positions table
+- [ ] 05-04-PLAN.md — Trade bar + AI chat panel wired to /api/chat
+- [ ] 05-05-PLAN.md — Phase integration and verification
 **UI hint**: yes
 
 ### Phase 6: Docker & Deployment
@@ -138,6 +144,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 2. Portfolio & Watchlist API | 3/3 | Complete   | 2026-03-31 |
 | 3. Chat API | 3/3 | Complete   | 2026-03-31 |
 | 4. Frontend Shell & Watchlist | 3/4 | In Progress|  |
-| 5. Charts, Portfolio & Trade UI | 0/TBD | Not started | - |
+| 5. Charts, Portfolio & Trade UI | 1/5 | In Progress | - |
 | 6. Docker & Deployment | 0/TBD | Not started | - |
 | 7. Testing | 0/TBD | Not started | - |
