@@ -11,8 +11,8 @@ from app.market import PriceCache
 
 logger = logging.getLogger(__name__)
 
-MODEL = "openrouter/openai/gpt-oss-120b"
-EXTRA_BODY = {"provider": {"order": ["cerebras"]}}
+MODEL = "openrouter/openai/gpt-4o-mini"
+EXTRA_BODY: dict = {}
 _HISTORY_LIMIT = 20
 
 _SYSTEM_PROMPT_TEMPLATE = """\
@@ -78,8 +78,6 @@ def call_llm(messages: list[dict]) -> ChatResponse:
         model=MODEL,
         messages=messages,
         response_format=ChatResponse,
-        reasoning_effort="low",
-        extra_body=EXTRA_BODY,
         api_key=api_key,
     )
     raw = response.choices[0].message.content
