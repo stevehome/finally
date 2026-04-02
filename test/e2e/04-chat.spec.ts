@@ -62,8 +62,12 @@ test.describe('TEST-05: AI chat with mocked LLM response', () => {
   test('mock trade from chat updates portfolio', async ({ page, request }) => {
     await page.goto(BASE_URL);
 
-    // Verify initial cash is $10,000
-    await expect(page.getByTestId('cash-balance')).toHaveText('$10,000.00', { timeout: 15_000 });
+    // Wait for cash balance to load
+    await expect(page.getByTestId('cash-balance')).toBeVisible({ timeout: 15_000 });
+
+    // Record cash before sending message
+    const before = await request.get(`${BASE_URL}/api/portfolio`);
+    const cashBefore = (await before.json()).cash_balance as number;
 
     // Send message — mock auto-buys 1 AAPL
     await page.getByPlaceholder('Ask about portfolio or trade…').fill('Do a trade');
@@ -74,10 +78,10 @@ test.describe('TEST-05: AI chat with mocked LLM response', () => {
       page.getByTestId('chat-messages').getByText(/Executed: BUY/i)
     ).toBeVisible({ timeout: 15_000 });
 
-    // Verify portfolio API reflects the trade
+    // Verify portfolio API reflects the trade — cash decreased
     const portfolio = await request.get(`${BASE_URL}/api/portfolio`);
     const data = await portfolio.json();
-    expect(data.cash_balance).toBeLessThan(10000.0);
+    expect(data.cash_balance).toBeLessThan(cashBefore);
     const positions = data.positions as Array<{ ticker: string }>;
     expect(positions.some(p => p.ticker === 'AAPL')).toBe(true);
   });

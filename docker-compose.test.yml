@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - LLM_MOCK=true
-    volumes:
-      - test-db:/app/db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
       interval: 5s
@@ -29,9 +27,6 @@ services:
     command: npx playwright test --reporter=list
     networks:
       - testnet
-
-volumes:
-  test-db:
 
 networks:
   testnet:

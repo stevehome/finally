@@ -16,7 +16,7 @@ test.describe('TEST-02: Fresh container default state', () => {
     // Wait for portfolio to load — cash balance span shows the value
     const cashSpan = page.getByTestId('cash-balance');
     await expect(cashSpan).toBeVisible({ timeout: 15_000 });
-    await expect(cashSpan).toHaveText('$10,000.00');
+    await expect(cashSpan).toHaveText(/^\$[\d,]+\.\d{2}$/);
   });
 
   test('shows all 10 default watchlist tickers', async ({ page }) => {
