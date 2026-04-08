@@ -1,5 +1,7 @@
 """Tests for PriceCache."""
 
+import threading
+
 from app.market.cache import PriceCache
 
 
@@ -101,3 +103,56 @@ class TestPriceCache:
         cache = PriceCache()
         update = cache.update("AAPL", 190.12345)
         assert update.price == 190.12
+
+    def test_concurrent_writes_are_safe(self):
+        """Multiple threads writing simultaneously must not corrupt the cache."""
+        cache = PriceCache()
+        errors = []
+
+        def write_prices(ticker: str, start: float, count: int) -> None:
+            try:
+                for i in range(count):
+                    cache.update(ticker, start + i * 0.01)
+            except Exception as e:
+                errors.append(e)
+
+        threads = [
+            threading.Thread(target=write_prices, args=(f"T{i}", 100.0 + i, 200))
+            for i in range(8)
+        ]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        assert errors == [], f"Thread errors: {errors}"
+        # All 8 tickers should be present
+        assert len(cache) == 8
+        # Version should equal total number of writes (8 threads × 200 writes)
+        assert cache.version == 1600
+
+    def test_version_is_consistent_under_concurrent_reads(self):
+        """Version reads from multiple threads must return valid (non-negative) values."""
+        cache = PriceCache()
+        versions = []
+
+        def read_version(count: int) -> None:
+            for _ in range(count):
+                versions.append(cache.version)
+
+        def write_prices(count: int) -> None:
+            for i in range(count):
+                cache.update("AAPL", 100.0 + i)
+
+        writer = threading.Thread(target=write_prices, args=(500,))
+        readers = [threading.Thread(target=read_version, args=(100,)) for _ in range(4)]
+
+        writer.start()
+        for r in readers:
+            r.start()
+        writer.join()
+        for r in readers:
+            r.join()
+
+        # All observed versions must be non-negative integers
+        assert all(v >= 0 for v in versions)

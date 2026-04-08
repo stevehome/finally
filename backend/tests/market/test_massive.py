@@ -199,3 +199,22 @@ class TestMassiveDataSource:
         assert cache.get_price("AAPL") == 190.50
 
         await source.stop()
+
+    async def test_poll_loop_polls_repeatedly(self):
+        """Poll loop continues updating the cache after start()."""
+        import asyncio
+
+        cache = PriceCache()
+        source = MassiveDataSource(api_key="test-key", price_cache=cache, poll_interval=0.05)
+        mock_snapshots = [_make_snapshot("AAPL", 190.50, 1707580800000)]
+
+        with patch("app.market.massive_client.RESTClient"):
+            with patch.object(source, "_fetch_snapshots", return_value=mock_snapshots):
+                await source.start(["AAPL"])
+                version_after_start = cache.version
+                await asyncio.sleep(0.25)  # Allow ~4 poll cycles
+                version_after_wait = cache.version
+                await source.stop()
+
+        # Version should have incremented as the loop fired multiple polls
+        assert version_after_wait > version_after_start

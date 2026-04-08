@@ -144,9 +144,11 @@ class GBMSimulator:
     # --- Internals ---
 
     def _add_ticker_internal(self, ticker: str) -> None:
-        """Add a ticker without rebuilding Cholesky (for batch initialization)."""
-        if ticker in self._prices:
-            return
+        """Add a ticker without rebuilding Cholesky (for batch initialization).
+
+        Assumes the ticker is not already present. The caller (add_ticker or
+        __init__) is responsible for deduplication.
+        """
         self._tickers.append(ticker)
         self._prices[ticker] = SEED_PRICES.get(ticker, random.uniform(50.0, 300.0))
         self._params[ticker] = TICKER_PARAMS.get(ticker, dict(DEFAULT_PARAMS))
@@ -240,6 +242,7 @@ class SimulatorDataSource(MarketDataSource):
         logger.info("Simulator stopped")
 
     async def add_ticker(self, ticker: str) -> None:
+        """Add a ticker. Requires start() to have been called first."""
         if self._sim:
             self._sim.add_ticker(ticker)
             # Seed cache immediately so the ticker has a price right away
@@ -249,6 +252,7 @@ class SimulatorDataSource(MarketDataSource):
             logger.info("Simulator: added ticker %s", ticker)
 
     async def remove_ticker(self, ticker: str) -> None:
+        """Remove a ticker. Requires start() to have been called first."""
         if self._sim:
             self._sim.remove_ticker(ticker)
         self._cache.remove(ticker)

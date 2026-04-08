@@ -1,6 +1,6 @@
 """Tests for GBMSimulator."""
 
-from app.market.seed_prices import SEED_PRICES
+from app.market.seed_prices import SEED_PRICES, TICKER_PARAMS
 from app.market.simulator import GBMSimulator
 
 
@@ -129,3 +129,30 @@ class TestGBMSimulator:
         if '.' in price_str:
             decimal_part = price_str.split('.')[1]
             assert len(decimal_part) <= 2
+
+    def test_all_default_tickers_cholesky(self):
+        """All 10 default tickers initialise without a LinAlgError."""
+        all_tickers = list(TICKER_PARAMS.keys())
+        assert len(all_tickers) == 10
+        sim = GBMSimulator(tickers=all_tickers)
+        # Cholesky must exist (10 tickers → valid correlation matrix)
+        assert sim._cholesky is not None
+        assert sim._cholesky.shape == (10, 10)
+
+    def test_all_default_tickers_step(self):
+        """step() returns positive prices for all 10 default tickers."""
+        all_tickers = list(TICKER_PARAMS.keys())
+        sim = GBMSimulator(tickers=all_tickers)
+        result = sim.step()
+        assert set(result.keys()) == set(all_tickers)
+        for ticker, price in result.items():
+            assert price > 0, f"{ticker} went non-positive"
+
+    def test_get_tickers_returns_list(self):
+        """get_tickers() returns a copy of the tracked ticker list."""
+        sim = GBMSimulator(tickers=["AAPL", "GOOGL"])
+        tickers = sim.get_tickers()
+        assert set(tickers) == {"AAPL", "GOOGL"}
+        # Mutations to the returned list must not affect the simulator
+        tickers.clear()
+        assert len(sim.get_tickers()) == 2
